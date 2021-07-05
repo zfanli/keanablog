@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">
+  <div v-if="!disappear" class="loading" :style="{ opacity }">
     <div class="loading-wrapper">
       <div ref="img" class="loading-animation"></div>
       <div ref="text" class="loading-text">
@@ -9,8 +9,9 @@
       </div>
       <v-progress-linear
         class="progress"
-        :value="progress"
         color="rgb(88, 219, 220)"
+        :value="progress"
+        :max="max"
       >
         <strong class="progress-value">{{ progress }}%</strong>
       </v-progress-linear>
@@ -23,11 +24,23 @@ import gsap from "gsap";
 
 export default {
   name: "Loading",
+  props: {
+    progress: { type: Number, default: 0 },
+    max: { type: Number, default: 100 },
+  },
   data: () => ({
-    progress: 0,
     anime: null,
-    timer: null,
+    disappear: false,
+    opacity: 1,
   }),
+  watch: {
+    progress(val) {
+      if (val === this.max) {
+        setTimeout(() => (this.opacity = 0), 200);
+        setTimeout(() => (this.disappear = true), 1000);
+      }
+    },
+  },
   methods: {
     start() {
       const chars = this.$refs.text.children;
@@ -45,31 +58,18 @@ export default {
           yoyo: true,
         },
       });
-
-      this.timer = setInterval(() => {
-        if (typeof this.progress === "string") {
-          if (this.progress.indexOf(".") === -1) {
-            this.progress += ".9";
-          } else if (this.progress.length !== 14) {
-            this.progress += "9";
-          }
-        } else {
-          this.progress += Math.ceil(Math.random() * 5) + 5;
-          if (this.progress > 99) this.progress = "99";
-        }
-      }, 800);
     },
     end() {
       if (this.anime) {
         this.anime.kill();
       }
-      if (this.timer) {
-        clearInterval(this.timer);
-      }
     },
   },
   mounted() {
     this.start();
+  },
+  destroyed() {
+    this.end();
   },
 };
 </script>
@@ -77,9 +77,16 @@ export default {
 <style lang="scss" scoped>
 .loading {
   height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 9999;
 
   .loading-wrapper {
     height: 100px;
