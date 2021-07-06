@@ -13,7 +13,7 @@
         :value="progress"
         :max="max"
       >
-        <strong class="progress-value">{{ progress }}%</strong>
+        <strong class="progress-value">{{ info }} {{ progress }}%</strong>
       </v-progress-linear>
     </div>
   </div>
@@ -27,6 +27,7 @@ export default {
   props: {
     progress: { type: Number, default: 0 },
     max: { type: Number, default: 100 },
+    info: { type: String, default: "" },
   },
   data: () => ({
     anime: null,

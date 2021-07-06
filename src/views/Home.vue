@@ -1,306 +1,181 @@
 <template>
-  <div
-    class="anime-demo"
-    :style="{
-      '--image-width': imageWidth + 'px',
-      '--image-height': imageHeight + 'px',
-      '--image-padding': imagePadding + 'px',
-    }"
-  >
-    <div class="scene banner-wrapper" ref="bannerWrapper">
-      <div class="banner" ref="imageWrapper">
-        <div class="image-frame" v-for="n in 9" :key="n"></div>
-      </div>
-
-      <div class="logo" :style="`width: ${logoWidth}px;`">
-        <div class="logo-text" :style="`font-size: ${imageWidth * 0.05}px;`">
-          <p>KEANA</p>
-          <p>BLOG</p>
-        </div>
-        <div class="bio">
-          music, milk tea and moods <br />
-          necessary stuffs for creation
-        </div>
-
-        <div class="scroll-indicator">
-          <v-icon class="scroll-icon">mdi-chevron-double-down</v-icon>
-        </div>
-      </div>
-    </div>
-
-    <div ref="main">
-      <div id="illustration" class="scene red lighten-4"></div>
-      <div id="mineral" class="scene yellow lighten-4"></div>
-      <div id="ink-wash" class="scene blue lighten-4"></div>
-      <div id="photography" class="scene purple lighten-4"></div>
-    </div>
-
-    <footer>this is a footer</footer>
-
-    <custom-nav :show="showNav" :active="navActive"></custom-nav>
+  <div>
+    <loading :progress="progress" :info="`Version: ${version},`"></loading>
+    <keana-blog
+      v-if="ready"
+      :illustration="illustration"
+      :mineral="mineral"
+      :inkWash="inkWash"
+      :photography="photography"
+      :scene="other"
+    ></keana-blog>
   </div>
 </template>
 <script>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { debounce } from "lodash";
+import Loading from "../components/Loading.vue";
+import KeanaBlog from "./KeanaBlog.vue";
 
-import CustomNav from "../components/CustomNav.vue";
+const payload = {
+  banner: [
+    require("../assets/images/banner/b1.jpg"),
+    require("../assets/images/banner/b2.jpg"),
+    require("../assets/images/banner/b3.jpg"),
+    require("../assets/images/banner/b4.jpg"),
+    require("../assets/images/banner/b5.jpg"),
+    require("../assets/images/banner/b6.jpg"),
+    require("../assets/images/banner/b7.jpg"),
+    require("../assets/images/banner/b8.jpg"),
+    require("../assets/images/banner/b9.jpg"),
+    require("../assets/images/banner/b10.jpg"),
+    require("../assets/images/banner/jj.png"),
+  ],
+  illustration: [
+    require("../assets/images/works/illustration.forest.16.9.jpg"),
+    require("../assets/images/works/illustration.wind.16.9.jpg"),
+    require("../assets/images/works/illustration.six.16.9.jpg"),
+    require("../assets/images/works/illustration.ric.9.16.jpg"),
+    require("../assets/images/works/illustration.f.3.4.jpg"),
+    require("../assets/images/works/illustration.whale.1.1.jpg"),
+    require("../assets/images/works/illustration.r.9.16.jpg"),
+  ],
+  mineral: [
+    require("../assets/images/works/mineral.fish.9.16.jpg"),
+    require("../assets/images/works/mineral.fenghuo.9.16.jpg"),
+    require("../assets/images/works/mineral.qin.16.9.jpg"),
+    require("../assets/images/works/mineral.qing.16.9.jpg"),
+    require("../assets/images/works/mineral.shuimu.16.9.jpg"),
+    require("../assets/images/works/mineral.win.16.9.jpg"),
+    require("../assets/images/works/mineral.yan.16.9.jpg"),
+    require("../assets/images/works/mineral.denglong.16.9.jpg"),
+    require("../assets/images/works/mineral.zuma.16.9.jpg"),
+    require("../assets/images/works/mineral.shanzi.3.4.jpg"),
+    require("../assets/images/works/mineral.jiu.3.4.jpg"),
+    require("../assets/images/works/mineral.kong.16.9.jpg"),
+    require("../assets/images/works/mineral.linmo.3.4.jpg"),
+    require("../assets/images/works/mineral.linmo2.3.4.jpg"),
+    require("../assets/images/works/mineral.sakura4.3.jpg"),
+    require("../assets/images/works/mineral.us.3.4.jpg"),
+    require("../assets/images/works/mineral.use.3.4.jpg"),
+    require("../assets/images/works/mineral.yinyue.9.16.jpg"),
+    require("../assets/images/works/mineral.xi.3.4.jpg"),
+    require("../assets/images/works/mineral.yu.9.16.jpg"),
+  ],
+  inkWash: [
+    require("../assets/images/works/ink-wash.long.1.1.jpg"),
+    require("../assets/images/works/ink-wash.jinfeng.9.16.jpg"),
+    require("../assets/images/works/ink-wash.huashen.9.16.jpg"),
+    require("../assets/images/works/ink-wash.qunshan.16.9.jpg"),
+    require("../assets/images/works/ink-wash.heye.16.9.jpg"),
+    require("../assets/images/works/ink-wash.he.16.9.jpg"),
+    require("../assets/images/works/ink-wash.duizuo.16.9.jpg"),
+    require("../assets/images/works/ink-wash.zuzi.16.9.jpg"),
+    require("../assets/images/works/ink-wash.shuxia.9.16.jpg"),
+    require("../assets/images/works/ink-wash.diaochan.9.16.jpg"),
+    require("../assets/images/works/ink-wash.yuhuan.9.16.jpg"),
+    require("../assets/images/works/ink-wash.xishi.9.16.jpg"),
+    require("../assets/images/works/ink-wash.zhaojun.9.16.jpg"),
+    require("../assets/images/works/ink-wash.ziyi.9.16.jpg"),
+    require("../assets/images/works/ink-wash.nvhai.9.16.jpg"),
+    require("../assets/images/works/ink-wash.wuti2.9.16.jpg"),
+    require("../assets/images/works/ink-wash.wuti3.3.4.jpg"),
+    require("../assets/images/works/ink-wash.xz.9.16.jpg"),
+    require("../assets/images/works/ink-wash.wuti.3.4.jpg"),
+    require("../assets/images/works/ink-wash.xiaonv.3.4.jpg"),
+    require("../assets/images/works/ink-wash.yuanri.16.9.jpg"),
+  ],
+  photography: [
+    require("../assets/images/works/photography.lan1.16.9.jpg"),
+    require("../assets/images/works/photography.lan2.16.9.jpg"),
+    require("../assets/images/works/photography.lan3.1.1.jpg"),
+    require("../assets/images/works/photography.fly16.9.jpg"),
+    require("../assets/images/works/photography.sky1.16.9.jpg"),
+    require("../assets/images/works/photography.ta.16.9.jpg"),
+    require("../assets/images/works/photography.yun.16.9.jpg"),
+    require("../assets/images/works/photography.haibian5.16.9.jpg"),
+    require("../assets/images/works/photography.haibian4.16.9.jpg"),
+    require("../assets/images/works/photography.haibian3.16.9.jpg"),
+    require("../assets/images/works/photography.haibian2.16.9.jpg"),
+    require("../assets/images/works/photography.haibian1.16.9.jpg"),
+    require("../assets/images/works/photography.bicycle.16.9.jpg"),
+    require("../assets/images/works/photography.girls.16.9.jpg"),
+    require("../assets/images/works/photography.beiying.16.9.jpg"),
+    require("../assets/images/works/photography.sanren.9.16.jpg"),
+    require("../assets/images/works/photography.run.9.16.jpg"),
+    require("../assets/images/works/photography.daoying.16.9.jpg"),
+    require("../assets/images/works/photography.guojin.16.9.jpg"),
+    require("../assets/images/works/photography.light.16.9.jpg"),
+    require("../assets/images/works/photography.light2.16.9.jpg"),
+    require("../assets/images/works/photography.wuti.16.9.jpg"),
+    require("../assets/images/works/photography.punk.16.9.jpg"),
+    require("../assets/images/works/photography.orenge.16.9.jpg"),
+    require("../assets/images/works/photography.zi.16.9.jpg"),
+    require("../assets/images/works/photography.ju.16.9.jpg"),
+    require("../assets/images/works/photography.fen.16.9.jpg"),
+    require("../assets/images/works/photography.yellow.16.9.jpg"),
+    require("../assets/images/works/photography.green.16.9.jpg"),
+    require("../assets/images/works/photography.he.16.9.jpg"),
+    require("../assets/images/works/photography.youle.16.9.jpg"),
+    require("../assets/images/works/photography.xueren.9.16.jpg"),
+    require("../assets/images/works/photography.youxiang.16.9.jpg"),
+  ],
+  other: {
+    wallpaper: {
+      mineral: require("../assets/images/works/wallpaper.mineral.jpg"),
+      illustration: require("../assets/images/works/wallpaper.illustration.jpg"),
+      inkWash: require("../assets/images/works/wallpaper.ink-wash.jpg"),
+      photography: require("../assets/images/works/wallpaper.photo.jpg"),
+    },
+    scene: {
+      mineral: require("../assets/images/works/scene.mineral.jpg"),
+      illustration: require("../assets/images/works/scene.illustration.jpg"),
+      inkWash: require("../assets/images/works/scene.ink-wash.jpg"),
+      photography: require("../assets/images/works/scene.photo.jpg"),
+    },
+  },
+};
 
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.defaults({
-  start: "top top",
-  scrub: 1,
+// prepare image list which should be pre loaded before this app becomes available
+const needLoad = [];
+let total = 0;
+Object.values(payload).forEach(function retrieve(a) {
+  if (a instanceof Array) {
+    total += a.length;
+    a.forEach((b) => needLoad.push(b));
+  } else if (typeof a === "string") {
+    total++;
+    needLoad.push(a);
+  } else {
+    Object.values(a).forEach(retrieve);
+  }
 });
 
 export default {
   name: "Home",
-  components: { CustomNav },
+  components: { Loading, KeanaBlog },
   data: () => {
     return {
-      imageWidth: 0,
-      imageHeight: 0,
-      imagePadding: 0,
-      timeline: null,
-      scrollTrigger: null,
-      duration: 0.2,
-      delay: 0,
-      showNav: false,
-      navActive: "",
+      version: "v0.2",
+      completed: 0,
+      total,
+      ...payload,
     };
   },
 
   computed: {
-    /**
-     * Keep the aspect ratio of the logo area with the image width.
-     */
-    logoWidth() {
-      const width = this.imageWidth * 0.3;
-      return window.innerWidth < width ? window.innerWidth : width;
+    progress() {
+      return Math.ceil((this.completed / this.total) * 100);
+    },
+    ready() {
+      return this.progress === 100;
     },
   },
 
   mounted() {
-    // Bind resize handler after elements mounted.
-    this.onResize();
-    window.addEventListener(
-      "resize",
-      debounce(this.onResize, 250, { tailing: true })
-    );
-
-    // Pause banner animation due to the performance issue,
-    // only play the animation when it's inside the visible area.
-    const { main } = this.$refs;
-    ScrollTrigger.create({
-      trigger: main,
-      onEnter: () => {
-        this.timeline.pause();
-        this.showNav = true;
-      },
-      onLeaveBack: () => {
-        this.timeline.resume();
-        this.showNav = false;
-      },
+    needLoad.forEach((b) => {
+      const image = new Image();
+      image.src = b;
+      image.addEventListener("load", () => this.completed++);
     });
-
-    ScrollTrigger.create({
-      trigger: "#illustration",
-      onEnter: () => (this.navActive = "插画"),
-      onEnterBack: () => (this.navActive = "插画"),
-    });
-    ScrollTrigger.create({
-      trigger: "#mineral",
-      onEnter: () => (this.navActive = "岩彩"),
-      onEnterBack: () => (this.navActive = "岩彩"),
-    });
-    ScrollTrigger.create({
-      trigger: "#ink-wash",
-      onEnter: () => (this.navActive = "水墨"),
-      onEnterBack: () => (this.navActive = "水墨"),
-    });
-    ScrollTrigger.create({
-      trigger: "#photography",
-      onEnter: () => (this.navActive = "摄影"),
-      onEnterBack: () => (this.navActive = "摄影"),
-    });
-  },
-
-  destroyed() {
-    window.removeEventListener("resize", this.onResize);
-  },
-
-  methods: {
-    /**
-     * Start animation.
-     */
-    start() {
-      const { bannerWrapper, imageWrapper } = this.$refs;
-      const { duration, delay } = this;
-
-      this.timeline = gsap
-        .timeline()
-        // mimic a gif but with transparency transition
-        .fromTo(
-          imageWrapper.children,
-          { opacity: 0 },
-          {
-            opacity: 1,
-            duration,
-            delay,
-            repeat: -1,
-            yoyo: true,
-            stagger: {
-              each: duration,
-            },
-          }
-        )
-        // animate scroll behavior
-        .fromTo(
-          imageWrapper,
-          { x: 0 },
-          { id: "scrollAnimation", x: -1 * this.imagePadding }
-        );
-
-      this.scrollTrigger = ScrollTrigger.create({
-        animation: this.timeline.getById("scrollAnimation"),
-        trigger: bannerWrapper,
-        start: "top top",
-        end: "+=" + this.imagePadding,
-        pin: true,
-      });
-
-      // Pause animation if banner is out of the current view.
-      if (window.pageYOffset > imageWrapper.offsetHeight) {
-        this.timeline.pause();
-      }
-    },
-
-    /**
-     * Kill the current animation to prepare for the next one.
-     */
-    clear() {
-      this.timeline && this.timeline.kill();
-      this.scrollTrigger && this.scrollTrigger.kill();
-    },
-
-    /**
-     * Re-calculate the width and height of images and re-generate animation.
-     */
-    onResize() {
-      // Re-calculate the width and height.
-      const { clientHeight, clientWidth } = this.$refs.bannerWrapper;
-      const { mobile } = this.$vuetify.breakpoint;
-      const imageWidth =
-          clientHeight / clientWidth <= 0.5626
-            ? clientWidth
-            : clientHeight * (16 / 9),
-        imageHeight =
-          clientHeight / clientWidth >= 0.5626
-            ? clientHeight
-            : clientWidth * (9 / 16) - 1,
-        imagePadding = Math.max(0, imageWidth - clientWidth);
-
-      // Check and skip animation re-generation if the width is not changed on mobile devices,
-      // to prevent unnecessary re-generation on mobile devices triggered by hiding address bar.
-      if (!mobile || imageWidth !== this.imageWidth) {
-        this.imageWidth = imageWidth;
-        this.imageHeight = imageHeight;
-        this.imagePadding = imagePadding;
-        // Kill current animation.
-        this.clear();
-        // Re-generate the animation.
-        this.start();
-      }
-    },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.anime-demo {
-  .scene {
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    position: relative;
-
-    .banner {
-      position: relative;
-      height: 100vh;
-      max-height: 100%;
-      width: var(--image-width);
-      overflow: hidden;
-      background-image: url(../assets/images/banner/b1.jpg);
-      background-size: 100%;
-
-      .image-frame {
-        background-size: 100%;
-        max-height: 100%;
-        right: 0;
-        top: 0;
-        position: absolute;
-        width: var(--image-width);
-        height: var(--image-height);
-        opacity: 0;
-
-        // generate image urls for all frames
-        @for $i from 1 through 9 {
-          $img-no: $i + 1;
-          &:nth-child(#{$i}) {
-            background-image: url(../assets/images/banner/b#{$img-no}.jpg);
-          }
-        }
-      }
-    }
-
-    .logo {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-
-      .logo-text {
-        color: rgb(220, 185, 155);
-        font-family: "Rock Salt", cursive;
-        background-image: url(../assets/images/banner/jj.png);
-        background-size: contain;
-        background-position: 50%;
-        text-shadow: 0 0 10px rgb(0 0 0 / 30%);
-      }
-
-      .bio {
-        color: rgba(255, 255, 255, 0.3);
-      }
-
-      .scroll-indicator {
-        margin-top: 1rem;
-        color: rgba(255, 255, 255, 0.8);
-        position: relative;
-
-        .scroll-icon {
-          color: inherit;
-          animation: float 6s ease-in-out infinite;
-          position: relative;
-        }
-      }
-    }
-  }
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-</style>

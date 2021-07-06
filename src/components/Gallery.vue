@@ -77,15 +77,17 @@ export default {
     const { mobile } = this.$vuetify.breakpoint;
 
     setTimeout(() => {
+      const gap = body.clientWidth - wrapper.clientWidth;
       this.timeline = gsap.timeline().fromTo(
         body,
         { x: 0 },
         {
-          x: mobile ? 0 : wrapper.clientWidth - body.clientWidth,
-          duration: body.clientWidth - wrapper.clientWidth,
+          x: mobile ? 0 : -gap,
           scrollTrigger: {
             trigger: wrapper,
+            end: "+=" + (gap + 200),
             pin: !mobile,
+            // pin: !mobile && gap !== 0,
             onUpdate: (e) => {
               this.progress = e.progress;
             },
@@ -116,6 +118,8 @@ export default {
   min-height: 100vh;
   max-width: 100%;
   overflow: hidden;
+  background-size: cover;
+  background-position: center;
 
   .gallery-body.grid.gallery-row {
     height: 100vh;
@@ -166,6 +170,7 @@ export default {
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     background-size: cover;
+    background-position: center;
 
     &:hover {
       transform: translateY(-5px);
