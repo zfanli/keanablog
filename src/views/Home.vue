@@ -30,9 +30,11 @@ const payload = {
     require("../assets/images/banner/jj.png"),
   ],
   illustration: [
+    require("../assets/images/works/illustration.three.16.9.jpg"),
+    require("../assets/images/works/illustration.room.16.9.jpg"),
     require("../assets/images/works/illustration.forest.16.9.jpg"),
     require("../assets/images/works/illustration.wind.16.9.jpg"),
-    require("../assets/images/works/illustration.six.16.9.jpg"),
+    require("../assets/images/works/illustration.six.9.16.jpg"),
     require("../assets/images/works/illustration.ric.9.16.jpg"),
     require("../assets/images/works/illustration.f.3.4.jpg"),
     require("../assets/images/works/illustration.whale.1.1.jpg"),
