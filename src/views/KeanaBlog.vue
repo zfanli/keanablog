@@ -36,7 +36,9 @@
         <div
           class="scene title"
           :style="{ 'background-image': `url(${scene.scene.illustration}` }"
-        ></div>
+        >
+          <div class="mask">illustration</div>
+        </div>
         <gallery
           progressColor="pink"
           :images="illus"
@@ -47,7 +49,9 @@
         <div
           class="scene title"
           :style="{ 'background-image': `url(${scene.scene.mineral}` }"
-        ></div>
+        >
+          <div class="mask">mineral color</div>
+        </div>
         <gallery
           progressColor="green"
           :images="mine"
@@ -58,7 +62,9 @@
         <div
           class="scene title"
           :style="{ 'background-image': `url(${scene.scene.inkWash}` }"
-        ></div>
+        >
+          <div class="mask">ink-wash painting</div>
+        </div>
         <gallery
           progressColor="yellow"
           :images="wash"
@@ -69,7 +75,9 @@
         <div
           class="scene title"
           :style="{ 'background-image': `url(${scene.scene.photography}` }"
-        ></div>
+        >
+          <div class="mask">photography</div>
+        </div>
         <gallery
           progressColor="blue"
           :images="photo"
@@ -207,11 +215,12 @@ export default {
 
       gsap.utils.toArray(".scene.title").forEach((a) =>
         ScrollTrigger.create({
-          animation: gsap.to(a, { yPercent: -20 }),
+          animation: gsap.to(a, { yPercent: -30 }),
           trigger: a,
           pin: true,
           pinSpacing: false,
           scrub: 0,
+          ease: "none",
         })
       );
     };
@@ -350,6 +359,36 @@ export default {
     position: relative;
     background-size: cover;
     background-position: center;
+
+    &.title {
+      // z-index: -1;
+
+      .mask {
+        font-size: 5rem;
+        line-height: 5rem;
+        letter-spacing: 1.5rem;
+        font-weight: lighter;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: rgba(255, 255, 255, 0.8);
+        z-index: 10;
+        word-break: break-all;
+        text-align: center;
+
+        &::before {
+          content: "";
+          position: absolute;
+          background-color: rgba(0, 0, 0, 0.6);
+          height: 100%;
+          width: 100%;
+          z-index: -1;
+        }
+      }
+    }
 
     .banner {
       position: relative;
