@@ -156,7 +156,7 @@ export default {
   components: { Loading, KeanaBlog },
   data: () => {
     return {
-      version: "v0.3",
+      version: "v0.5",
       completed: 0,
       total,
       ...payload,
