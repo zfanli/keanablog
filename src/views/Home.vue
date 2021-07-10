@@ -156,9 +156,10 @@ export default {
   components: { Loading, KeanaBlog },
   data: () => {
     return {
-      version: "v0.6",
+      version: "v0.7",
       completed: 0,
       total,
+      cache: [],
       ...payload,
     };
   },
@@ -177,6 +178,7 @@ export default {
       const image = new Image();
       image.src = b;
       image.addEventListener("load", () => this.completed++);
+      this.cache.push(image);
     });
   },
 };
