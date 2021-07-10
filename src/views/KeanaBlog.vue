@@ -22,7 +22,7 @@
         </div>
         <div class="bio">
           music, milk tea and moods <br />
-          necessary stuffs for creation
+          necessary stuffs for creativity
         </div>
 
         <div class="scroll-indicator">
@@ -319,6 +319,10 @@ export default {
         this.clear();
         // Re-generate the animation.
         this.start();
+        // Update scroll trigger
+        // setTimeout(() => ScrollTrigger.refresh(), 200);
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
       }
     },
 
