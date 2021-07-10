@@ -4,7 +4,6 @@
     :style="{
       '--image-width': banner.imageWidth + 'px',
       '--image-height': banner.imageHeight + 'px',
-      '--image-padding': banner.imagePadding + 'px',
     }"
   >
     <div class="scene banner-wrapper" ref="bannerWrapper">
@@ -29,14 +28,24 @@
           <v-icon class="scroll-icon">mdi-chevron-double-down</v-icon>
         </div>
       </div>
+
+      <!-- <div class="gradient"></div> -->
     </div>
 
     <div ref="main">
       <div id="illustration" class="scene">
         <div
           class="scene title"
-          :style="{ 'background-image': `url(${scene.scene.illustration}` }"
+          :style="{
+            'background-image': `url(${scene.scene.illustrationNight}`,
+          }"
         >
+          <div
+            class="scene-flip"
+            :style="{
+              'background-image': `url(${scene.scene.illustrationLight}`,
+            }"
+          ></div>
           <div class="mask">illustration</div>
         </div>
         <gallery
@@ -191,8 +200,22 @@ export default {
 
       ScrollTrigger.create({
         trigger: "#illustration",
-        onEnter: () => (this.navActive = "插画"),
-        onEnterBack: () => (this.navActive = "插画"),
+        onEnter: () => {
+          this.navActive = "插画";
+          gsap.to("#illustration .scene-flip", {
+            opacity: 1,
+            duration: 0.25,
+          });
+        },
+        onEnterBack: () => {
+          this.navActive = "插画";
+        },
+        onLeaveBack: () => {
+          gsap.to("#illustration .scene-flip", {
+            opacity: 0,
+            duration: 0.25,
+          });
+        },
       });
 
       ScrollTrigger.create({
@@ -367,6 +390,15 @@ export default {
     &.title {
       // z-index: -1;
 
+      .scene-flip {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-size: cover;
+        background-position: center;
+      }
+
       .mask {
         font-size: 5rem;
         line-height: 5rem;
@@ -396,9 +428,10 @@ export default {
 
     .banner {
       position: relative;
-      height: 100vh;
-      max-height: 100%;
+      // height: 100vh;
+      // max-height: 100%;
       width: var(--image-width);
+      height: var(--image-height);
       overflow: hidden;
       background-image: url(../assets/images/banner/b1.jpg);
       background-size: 100%;
@@ -459,6 +492,14 @@ export default {
         }
       }
     }
+
+    .gradient {
+      position: absolute;
+      bottom: 0;
+      height: 100px;
+      width: 100%;
+      background-image: linear-gradient(#0000, white 80px);
+    }
   }
 
   footer {
@@ -469,7 +510,7 @@ export default {
     text-align: center;
     vertical-align: bottom;
     padding-bottom: 2rem;
-    background-color: #6f7a4c;
+    background-color: #4c7a67;
     color: rgba(255, 255, 255, 0.5);
   }
 }

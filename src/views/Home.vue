@@ -129,7 +129,8 @@ const payload = {
     },
     scene: {
       mineral: require("../assets/images/works/scene.mineral.jpg"),
-      illustration: require("../assets/images/works/scene.illustration.jpg"),
+      illustrationLight: require("../assets/images/works/scene.illustration-light.jpg"),
+      illustrationNight: require("../assets/images/works/scene.illustration-night.jpg"),
       inkWash: require("../assets/images/works/scene.ink-wash.jpg"),
       photography: require("../assets/images/works/scene.photo.jpg"),
     },
@@ -156,7 +157,7 @@ export default {
   components: { Loading, KeanaBlog },
   data: () => {
     return {
-      version: "v0.7",
+      version: "v0.8",
       completed: 0,
       total,
       cache: [],
