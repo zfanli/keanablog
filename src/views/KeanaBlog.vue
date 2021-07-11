@@ -28,8 +28,6 @@
           <v-icon class="scroll-icon">mdi-chevron-double-down</v-icon>
         </div>
       </div>
-
-      <!-- <div class="gradient"></div> -->
     </div>
 
     <div
@@ -152,7 +150,7 @@ export default {
         { name: "水墨", link: "/#ink-wash", color: "#288994" },
         { name: "摄影", link: "/#photography", color: "#ced177" },
         { name: "“我”", link: "#me", color: "#e2ad69" },
-        { name: "首页", link: "/#app", color: "#f8baa7" },
+        { name: "首页", link: "/", color: "#f8baa7" },
       ],
       menuColor: "#1f675a",
     };
@@ -401,6 +399,7 @@ export default {
     position: relative;
     background-size: cover;
     background-position: center;
+    // z-index: 1;
 
     &.nav {
       display: flex;
@@ -409,6 +408,8 @@ export default {
     }
 
     &.title {
+      // z-index: -1;
+
       .scene-flip {
         position: absolute;
         width: 100%;
@@ -510,14 +511,6 @@ export default {
           position: relative;
         }
       }
-    }
-
-    .gradient {
-      position: absolute;
-      bottom: 0;
-      height: 100px;
-      width: 100%;
-      background-image: linear-gradient(#0000, white 80px);
     }
   }
 
