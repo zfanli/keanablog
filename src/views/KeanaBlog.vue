@@ -32,6 +32,15 @@
       <!-- <div class="gradient"></div> -->
     </div>
 
+    <div
+      class="scene nav"
+      :style="{
+        'background-image': `url(${scene.scene.navigation}`,
+      }"
+    >
+      <navigation :items="items" :menuColor="menuColor"></navigation>
+    </div>
+
     <div ref="main">
       <div id="illustration" class="scene">
         <div
@@ -96,8 +105,6 @@
     </div>
 
     <footer>Keana Blog, <br />made with Vue.js and animated with GSAP.</footer>
-
-    <custom-nav :show="showNav" :active="navActive"></custom-nav>
   </div>
 </template>
 <script>
@@ -105,7 +112,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { debounce } from "lodash";
 
-import CustomNav from "../components/CustomNav.vue";
+import Navigation from "../components/Navigation.vue";
 import Gallery from "../components/Gallery.vue";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -116,7 +123,7 @@ ScrollTrigger.defaults({
 
 export default {
   name: "KeanaBlog",
-  components: { CustomNav, Gallery },
+  components: { Navigation, Gallery },
 
   props: {
     illustration: { type: Array, default: () => [] },
@@ -139,6 +146,15 @@ export default {
       delay: 0,
       showNav: false,
       navActive: "",
+      items: [
+        { name: "插画", link: "/#illustration", color: "#e28869" },
+        { name: "岩彩", link: "/#mineral", color: "#77c4d1" },
+        { name: "水墨", link: "/#ink-wash", color: "#288994" },
+        { name: "摄影", link: "/#photography", color: "#ced177" },
+        { name: "“我”", link: "#me", color: "#e2ad69" },
+        { name: "首页", link: "/#app", color: "#f8baa7" },
+      ],
+      menuColor: "#1f675a",
     };
   },
 
@@ -382,14 +398,17 @@ export default {
   .scene {
     width: 100%;
     min-height: 100vh;
-    overflow: hidden;
     position: relative;
     background-size: cover;
     background-position: center;
 
-    &.title {
-      // z-index: -1;
+    &.nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
+    &.title {
       .scene-flip {
         position: absolute;
         width: 100%;

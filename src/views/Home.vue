@@ -32,6 +32,7 @@ const payload = {
   illustration: [
     require("../assets/images/works/illustration.three.16.9.jpg"),
     require("../assets/images/works/illustration.room.16.9.jpg"),
+    // require("../assets/images/works/illustration.roomlight.16.9.gif"),
     require("../assets/images/works/illustration.forest.16.9.jpg"),
     require("../assets/images/works/illustration.wind.16.9.jpg"),
     require("../assets/images/works/illustration.six.9.16.jpg"),
@@ -133,6 +134,7 @@ const payload = {
       illustrationNight: require("../assets/images/works/scene.illustration-night.jpg"),
       inkWash: require("../assets/images/works/scene.ink-wash.jpg"),
       photography: require("../assets/images/works/scene.photo.jpg"),
+      navigation: require("../assets/images/works/scene.mingming.jpg"),
     },
   },
 };
@@ -157,7 +159,7 @@ export default {
   components: { Loading, KeanaBlog },
   data: () => {
     return {
-      version: "v0.8",
+      version: "v0.9",
       completed: 0,
       total,
       cache: [],
