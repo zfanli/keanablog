@@ -190,6 +190,8 @@ export default {
       debounce(this.onResize, 250, { tailing: true })
     );
 
+    const letterSpacing = this.$vuetify.breakpoint.mobile ? "2rem" : "10rem";
+
     // initialize scroll trigger after element rendered
     const init = () => {
       if (this.banner.imageWidth === 0) {
@@ -214,6 +216,10 @@ export default {
 
       ScrollTrigger.create({
         trigger: "#illustration",
+        animation: gsap.to("#illustration .mask", {
+          letterSpacing,
+          opacity: 0,
+        }),
         onEnter: () => {
           this.navActive = "插画";
           gsap.to("#illustration .scene-flip", {
@@ -234,18 +240,30 @@ export default {
 
       ScrollTrigger.create({
         trigger: "#mineral",
+        animation: gsap.to("#mineral .mask", {
+          letterSpacing,
+          opacity: 0,
+        }),
         onEnter: () => (this.navActive = "岩彩"),
         onEnterBack: () => (this.navActive = "岩彩"),
       });
 
       ScrollTrigger.create({
         trigger: "#ink-wash",
+        animation: gsap.to("#ink-wash .mask", {
+          letterSpacing,
+          opacity: 0,
+        }),
         onEnter: () => (this.navActive = "水墨"),
         onEnterBack: () => (this.navActive = "水墨"),
       });
 
       ScrollTrigger.create({
         trigger: "#photography",
+        animation: gsap.to("#photography .mask", {
+          letterSpacing,
+          opacity: 0,
+        }),
         onEnter: () => (this.navActive = "摄影"),
         onEnterBack: () => (this.navActive = "摄影"),
       });
@@ -392,6 +410,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~vuetify/src/styles/styles.sass";
+
 .anime-demo {
   .scene {
     width: 100%;
@@ -422,7 +442,7 @@ export default {
       .mask {
         font-size: 5rem;
         line-height: 5rem;
-        letter-spacing: 1.5rem;
+        letter-spacing: 3rem;
         font-weight: lighter;
         display: flex;
         justify-content: center;
@@ -432,8 +452,13 @@ export default {
         height: 100%;
         color: rgba(255, 255, 255, 0.8);
         z-index: 10;
-        word-break: break-all;
+        white-space: nowrap;
         text-align: center;
+
+        @media #{map-get($display-breakpoints, 'sm-and-down')} {
+          font-size: 1rem;
+          letter-spacing: 1rem;
+        }
 
         &::before {
           content: "";

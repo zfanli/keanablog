@@ -32,9 +32,12 @@ const payload = {
   illustration: [
     require("../assets/images/works/illustration.three.16.9.jpg"),
     require("../assets/images/works/illustration.room.16.9.jpg"),
-    // require("../assets/images/works/illustration.roomlight.16.9.gif"),
     require("../assets/images/works/illustration.forest.16.9.jpg"),
     require("../assets/images/works/illustration.wind.16.9.jpg"),
+    require("../assets/images/works/illustration.kk.16.9.jpg"),
+    require("../assets/images/works/illustration.three-1.9.16.jpg"),
+    require("../assets/images/works/illustration.three-2.9.16.jpg"),
+    require("../assets/images/works/illustration.three-3.9.16.jpg"),
     require("../assets/images/works/illustration.six.9.16.jpg"),
     require("../assets/images/works/illustration.ric.9.16.jpg"),
     require("../assets/images/works/illustration.f.3.4.jpg"),
@@ -159,7 +162,7 @@ export default {
   components: { Loading, KeanaBlog },
   data: () => {
     return {
-      version: "v0.11",
+      version: "v0.12",
       completed: 0,
       total,
       cache: [],
