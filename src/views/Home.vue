@@ -161,7 +161,7 @@ export default {
   name: "Home",
   components: { Loading, KeanaBlog },
   data: () => ({
-    version: "v1.0",
+    version: "v1.1",
     completed: 0,
     total,
     cache: [],

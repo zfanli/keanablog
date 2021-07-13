@@ -40,7 +40,9 @@
       <div class="about-me">
         <p>Keana 作品展示</p>
         <p>想留言、对作品感兴趣？</p>
-        <p><a :href="mailto">欢迎邮件联系我！</a></p>
+        <p>
+          <a :href="mailto"> 点这里发邮件联系我！</a>
+        </p>
       </div>
       <navigation :items="items" :menuColor="menuColor"></navigation>
     </div>
@@ -440,6 +442,7 @@ export default {
     position: relative;
     background-size: cover;
     background-position: center;
+    overflow-x: hidden;
     // z-index: 1;
 
     &.nav {
