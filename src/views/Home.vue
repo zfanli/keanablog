@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :progress="progress" :info="`Version: ${version},`"></loading>
+    <loading :progress="progress" :info="info"></loading>
     <keana-blog
       v-if="ready"
       :illustration="illustration"
@@ -160,15 +160,13 @@ Object.values(payload).forEach(function retrieve(a) {
 export default {
   name: "Home",
   components: { Loading, KeanaBlog },
-  data: () => {
-    return {
-      version: "v0.13",
-      completed: 0,
-      total,
-      cache: [],
-      ...payload,
-    };
-  },
+  data: () => ({
+    version: "v1.0",
+    completed: 0,
+    total,
+    cache: [],
+    ...payload,
+  }),
 
   computed: {
     progress() {
@@ -177,9 +175,37 @@ export default {
     ready() {
       return this.progress === 100;
     },
+    info() {
+      let action;
+      switch (Math.ceil(this.progress / 10)) {
+        case 0:
+          action = "开始整理心情...";
+          break;
+        case 1:
+        case 2:
+        case 3:
+          action = "正在翻找可以用的图片...";
+          break;
+        case 4:
+        case 5:
+        case 6:
+          action = "正在驱赶捣乱的猫咪...";
+          break;
+        case 7:
+        case 8:
+        case 9:
+          action = "正在准备饮料和甜点...";
+          break;
+        case 10:
+          action = "一切准备就绪，开始进入...";
+          break;
+      }
+      return `Version: ${this.version}, %progress%\n${action}`;
+    },
   },
 
   mounted() {
+    console.log(this.info);
     needLoad.forEach((b) => {
       const image = new Image();
       image.src = b;
