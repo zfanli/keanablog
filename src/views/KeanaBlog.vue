@@ -31,11 +31,17 @@
     </div>
 
     <div
+      id="me"
       class="scene nav"
       :style="{
         'background-image': `url(${scene.scene.navigation}`,
       }"
     >
+      <div class="about-me">
+        <p>Keana 作品展示</p>
+        <p>想留言、对作品感兴趣？</p>
+        <p><a :href="mailto">欢迎邮件联系我！</a></p>
+      </div>
       <navigation :items="items" :menuColor="menuColor"></navigation>
     </div>
 
@@ -132,6 +138,20 @@ export default {
   },
 
   data: () => {
+    const mailto = [
+      "mailto:keanawang@outlook.com?",
+      "subject=[来自Blog的留言]",
+      "&body=Hi, Keana!%0d%0a%0d%0a",
+      "我是...%0d%0a%0d%0a",
+      "我看到了你的网站，并且对你的作品很感兴趣！%0d%0a",
+      "我想说...%0d%0a%0d%0a%0d%0a%0d%0a",
+      "期待你的回复！%0d%0a",
+      "------------------------------%0d%0a",
+      "这条留言从下面地址发出。%0d%0a",
+      "（请不要删除这段信息哟～）%0d%0a",
+      window.location.origin,
+    ];
+
     return {
       banner: {
         imageWidth: 0,
@@ -149,10 +169,11 @@ export default {
         { name: "岩彩", link: "/#mineral", color: "#77c4d1" },
         { name: "水墨", link: "/#ink-wash", color: "#288994" },
         { name: "摄影", link: "/#photography", color: "#ced177" },
-        { name: "“我”", link: "#me", color: "#e2ad69" },
+        { name: "“我”", link: "/#me", color: "#e2ad69" },
         { name: "首页", link: "/", color: "#f8baa7" },
       ],
       menuColor: "#1f675a",
+      mailto: mailto.join(""),
     };
   },
 
@@ -423,8 +444,21 @@ export default {
 
     &.nav {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      .about-me {
+        margin-bottom: 150px;
+        text-align: center;
+        color: #dcb99b;
+        font-size: 1.5rem;
+        text-shadow: 0 0 10px #0005;
+
+        a {
+          color: #dcb99b;
+        }
+      }
     }
 
     &.title {
