@@ -30,24 +30,23 @@
       </div>
     </div>
 
-    <div
-      id="me"
-      class="scene nav"
-      :style="{
-        'background-image': `url(${scene.scene.navigation}`,
-      }"
-    >
-      <div class="about-me">
-        <p>Keana 作品展示</p>
-        <p>想留言、对作品感兴趣？</p>
-        <p>
-          <a :href="mailto"> 点这里发邮件联系我！</a>
-        </p>
-      </div>
-      <navigation :items="items" :menuColor="menuColor"></navigation>
-    </div>
-
     <div ref="main">
+      <div
+        id="me"
+        class="scene nav"
+        :style="{
+          'background-image': `url(${scene.scene.navigation}`,
+        }"
+      >
+        <div class="about-me">
+          <p>Keana 作品展示</p>
+          <p>想留言、对作品感兴趣？</p>
+          <p>
+            <a :href="mailto"> 点这里发邮件联系我！</a>
+          </p>
+        </div>
+        <navigation :items="items" :menuColor="menuColor"></navigation>
+      </div>
       <div id="illustration" class="scene">
         <div
           class="scene title"
@@ -160,6 +159,7 @@ export default {
         imageHeight: 0,
         imagePadding: 0,
       },
+      clientWidth: 0,
       timeline: null,
       scrollTrigger: null,
       duration: 0.2,
@@ -239,10 +239,14 @@ export default {
 
       ScrollTrigger.create({
         trigger: "#illustration",
-        animation: gsap.to("#illustration .mask", {
-          letterSpacing,
-          opacity: 0,
-        }),
+        animation: gsap.fromTo(
+          "#illustration .mask",
+          { opacity: 1 },
+          {
+            letterSpacing,
+            opacity: 0,
+          }
+        ),
         onEnter: () => {
           this.navActive = "插画";
           gsap.to("#illustration .scene-flip", {
@@ -263,30 +267,42 @@ export default {
 
       ScrollTrigger.create({
         trigger: "#mineral",
-        animation: gsap.to("#mineral .mask", {
-          letterSpacing,
-          opacity: 0,
-        }),
+        animation: gsap.fromTo(
+          "#mineral .mask",
+          { opacity: 1 },
+          {
+            letterSpacing,
+            opacity: 0,
+          }
+        ),
         onEnter: () => (this.navActive = "岩彩"),
         onEnterBack: () => (this.navActive = "岩彩"),
       });
 
       ScrollTrigger.create({
         trigger: "#ink-wash",
-        animation: gsap.to("#ink-wash .mask", {
-          letterSpacing,
-          opacity: 0,
-        }),
+        animation: gsap.fromTo(
+          "#ink-wash .mask",
+          { opacity: 1 },
+          {
+            letterSpacing,
+            opacity: 0,
+          }
+        ),
         onEnter: () => (this.navActive = "水墨"),
         onEnterBack: () => (this.navActive = "水墨"),
       });
 
       ScrollTrigger.create({
         trigger: "#photography",
-        animation: gsap.to("#photography .mask", {
-          letterSpacing,
-          opacity: 0,
-        }),
+        animation: gsap.fromTo(
+          "#photography .mask",
+          { opacity: 1 },
+          {
+            letterSpacing,
+            opacity: 0,
+          }
+        ),
         onEnter: () => (this.navActive = "摄影"),
         onEnterBack: () => (this.navActive = "摄影"),
       });
@@ -389,10 +405,11 @@ export default {
 
       // Check and skip animation re-generation if the width is not changed on mobile devices,
       // to prevent unnecessary re-generation on mobile devices triggered by hiding address bar.
-      if (!mobile || imageWidth !== this.banner.imageWidth) {
+      if (!mobile || clientWidth !== this.clientHeight) {
         this.banner.imageWidth = imageWidth;
         this.banner.imageHeight = imageHeight;
         this.banner.imagePadding = imagePadding;
+        this.clientHeight = clientWidth;
         // Kill current animation.
         this.clear();
         // Re-generate the animation.
@@ -436,23 +453,25 @@ export default {
 @import "~vuetify/src/styles/styles.sass";
 
 .anime-demo {
+  max-width: 100vw;
+  overflow-x: hidden;
+
   .scene {
     width: 100%;
     min-height: 100vh;
     position: relative;
     background-size: cover;
     background-position: center;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     // z-index: 1;
 
     &.nav {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: center;
 
       .about-me {
-        margin-bottom: 150px;
         text-align: center;
         color: #dcb99b;
         font-size: 1.5rem;

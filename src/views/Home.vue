@@ -161,7 +161,7 @@ export default {
   name: "Home",
   components: { Loading, KeanaBlog },
   data: () => ({
-    version: "v1.1",
+    version: "v1.2",
     completed: 0,
     total,
     cache: [],
@@ -205,7 +205,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.info);
     needLoad.forEach((b) => {
       const image = new Image();
       image.src = b;
