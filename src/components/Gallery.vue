@@ -32,10 +32,10 @@
 
       <div
         class="show-more"
-        v-if="displayImages.length !== images.length"
         @click="showMore"
+        v-if="images.length - defaultDisplayCount > 0"
       >
-        Show More
+        {{ showAll ? "Show Less" : "Show More" }}
       </div>
     </div>
 
@@ -193,7 +193,7 @@ export default {
     },
 
     showMore() {
-      this.showAll = true;
+      this.showAll = !this.showAll;
       this.onResize();
       setTimeout(() => {
         this.bindAnimation();

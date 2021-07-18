@@ -64,6 +64,7 @@
         </div>
         <gallery
           progressColor="pink"
+          :defaultDisplayCount="13"
           :images="illus"
           :style="{ 'background-image': `url(${scene.wallpaper.illustration}` }"
         ></gallery>
@@ -77,6 +78,7 @@
         </div>
         <gallery
           progressColor="green"
+          :defaultDisplayCount="11"
           :images="mine"
           :style="{ 'background-image': `url(${scene.wallpaper.mineral}` }"
         ></gallery>
