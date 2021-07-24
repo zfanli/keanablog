@@ -30,11 +30,7 @@
         <img :src="img.src" alt="image" />
       </div>
 
-      <div
-        class="show-more"
-        @click="showMore"
-        v-if="images.length - defaultDisplayCount > 0"
-      >
+      <div class="show-more" @click="showMore" v-if="shouldShowMore">
         {{ showAll ? "Show Less" : "Show More" }}
       </div>
     </div>
@@ -120,6 +116,13 @@ export default {
     displayImages() {
       if (this.showAll) return this.images;
       else return this.images.slice(0, this.defaultDisplayCount);
+    },
+    shouldShowMore() {
+      // return this.images.length - this.defaultDisplayCount > 0
+      return (
+        this.images.length - this.defaultDisplayCount > 0 &&
+        this.displayImages.length !== this.images.length
+      );
     },
   },
 
