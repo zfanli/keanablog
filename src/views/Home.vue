@@ -30,7 +30,13 @@ const payload = {
     require("../assets/images/banner/jj.png"),
   ],
   illustration: [
+    require("../assets/images/works/illustration.sunrise.4.3.jpg"),
+    require("../assets/images/works/illustration.snow.9.16.jpg"),
+    require("../assets/images/works/illustration.yue.4.3.jpg"),
+    require("../assets/images/works/illustration.girl.9.16.jpg"),
+    require("../assets/images/works/illustration.peach.9.16.jpg"),
     require("../assets/images/works/illustration.coffee.9.16.jpg"),
+    require("../assets/images/works/illustration.coffee2.1.1.jpg"),
     require("../assets/images/works/illustration.three.16.9.jpg"),
     require("../assets/images/works/illustration.room.16.9.jpg"),
     require("../assets/images/works/illustration.forest.16.9.jpg"),
@@ -162,7 +168,7 @@ export default {
   name: "Home",
   components: { Loading, KeanaBlog },
   data: () => ({
-    version: "v1.7",
+    version: "v1.8",
     completed: 0,
     total,
     cache: [],
