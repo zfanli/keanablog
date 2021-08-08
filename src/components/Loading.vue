@@ -110,7 +110,7 @@ export default {
       width: 840px;
       position: relative;
       left: -70px;
-      background-image: url(../assets/images/loading.png);
+      background-image: url(https://keanablog.oss-cn-shanghai.aliyuncs.com/loading.png);
       animation: animate-loading 1s steps(9, end) infinite;
     }
 

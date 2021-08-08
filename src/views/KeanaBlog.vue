@@ -426,7 +426,7 @@ export default {
     parse(a) {
       const temp = a.split(".");
       let span;
-      switch (`${temp[temp.length - 4]}:${temp[temp.length - 3]}`) {
+      switch (`${temp[temp.length - 3]}:${temp[temp.length - 2]}`) {
         case "16:9":
           span = 4;
           break;
@@ -536,7 +536,7 @@ export default {
       width: var(--image-width);
       height: var(--image-height);
       overflow: hidden;
-      background-image: url(../assets/images/banner/b1.jpg);
+      background-image: url(https://keanablog.oss-cn-shanghai.aliyuncs.com/b1.jpg);
       background-size: 100%;
 
       .image-frame {
@@ -553,7 +553,7 @@ export default {
         @for $i from 1 through 9 {
           $img-no: $i + 1;
           &:nth-child(#{$i}) {
-            background-image: url(../assets/images/banner/b#{$img-no}.jpg);
+            background-image: url(https://keanablog.oss-cn-shanghai.aliyuncs.com/b#{$img-no}.jpg);
           }
         }
       }
@@ -573,7 +573,7 @@ export default {
       .logo-text {
         color: rgb(220, 185, 155);
         font-family: "Rock Salt", cursive;
-        background-image: url(../assets/images/banner/jj.png);
+        background-image: url(https://keanablog.oss-cn-shanghai.aliyuncs.com/jj.png);
         background-size: contain;
         background-position: 50%;
         text-shadow: 0 0 10px rgb(0 0 0 / 30%);
