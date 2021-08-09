@@ -335,6 +335,12 @@ export default {
     };
 
     setTimeout(init, 0);
+
+    // load views info count script after mounted
+    const script = document.createElement("script");
+    script.src =
+      "https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js";
+    document.body.append(script);
   },
 
   destroyed() {
