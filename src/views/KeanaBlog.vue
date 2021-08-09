@@ -111,7 +111,20 @@
       </div>
     </div>
 
-    <footer>Keana Blog, <br />made with Vue.js and animated with GSAP.</footer>
+    <footer>
+      Keana Blog,
+      <div>
+        <span id="busuanzi_container_site_uv" class="mr-5">
+          <i class="mdi mdi-account-multiple mr-2"></i>
+          <span id="busuanzi_value_site_uv"></span>
+        </span>
+        <span id="busuanzi_container_site_pv">
+          <i class="mdi mdi-eye mr-2"></i>
+          <span id="busuanzi_value_site_pv"></span>
+        </span>
+      </div>
+      made with Vue.js and animated with GSAP.
+    </footer>
   </div>
 </template>
 <script>
