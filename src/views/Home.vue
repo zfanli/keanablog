@@ -31,6 +31,7 @@ const bucketURL = "https://keanablog.oss-cn-shanghai.aliyuncs.com/",
       "jj.png",
     ],
     illustration: [
+      "illustration.panda.9.16.jpg",
       "illustration.girls.16.9.jpg",
       "illustration.watermelon.3.4.jpg",
       "illustration.lemonade.3.4.jpg",
@@ -188,7 +189,7 @@ export default {
   name: "Home",
   components: { Loading, KeanaBlog },
   data: () => ({
-    version: "v1.13",
+    version: "v1.14",
     completed: 0,
     total,
     cache: [],
