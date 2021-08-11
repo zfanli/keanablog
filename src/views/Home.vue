@@ -138,22 +138,22 @@ const bucketURL = "https://keanablog.oss-cn-shanghai.aliyuncs.com/",
       "photography.youxiang.3.4.jpg",
     ],
     other: {
-      // wallpaper: {
-      //   mineral: "wallpaper.mineral.jpg",
-      //   illustration: "wallpaper.illustration.jpg",
-      //   inkWash: "wallpaper.ink-wash.jpg",
-      //   photography: "wallpaper.photo.jpg",
-      // },
       wallpaper: {
-        mineral:
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-        illustration:
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-        inkWash:
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-        photography:
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+        mineral: "wallpaper.mineral.jpg",
+        illustration: "wallpaper.illustration.jpg",
+        inkWash: "wallpaper.ink-wash.jpg",
+        photography: "wallpaper.photo.jpg",
       },
+      // wallpaper: {
+      //   mineral:
+      //     "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      //   illustration:
+      //     "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      //   inkWash:
+      //     "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      //   photography:
+      //     "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+      // },
       scene: {
         mineral: "scene.mineral.jpg",
         illustrationLight: "scene.illustration-light.jpg",
