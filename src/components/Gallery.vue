@@ -4,18 +4,9 @@
     ref="wrapper"
     :style="{
       '--cell-height': cellHeight + 'px',
-      '--cell-width': cellWidth + 'px',
     }"
   >
-    <div
-      ref="body"
-      :class="{
-        'gallery-body': true,
-        grid: true,
-        'gallery-column': $vuetify.breakpoint.mobile,
-        'gallery-row': !$vuetify.breakpoint.mobile,
-      }"
-    >
+    <div ref="body" class="gallery-body grid gallery-column">
       <div
         v-for="(img, i) in displayImages"
         :key="i"
@@ -34,18 +25,6 @@
         {{ showAll ? "Show Less" : "Show More" }}
       </div>
     </div>
-
-    <v-progress-linear
-      v-if="!$vuetify.breakpoint.mobile"
-      class="progress"
-      buffer-value="0"
-      height="6"
-      :color="progressColor"
-      :value="progress * 100"
-      stream
-      bottom
-      absolute
-    ></v-progress-linear>
 
     <div class="gallery-viewer-button-panel" v-show="curr !== -1" ref="panel">
       <div class="gallery-viewer-previewer" ref="viewer">
@@ -102,7 +81,6 @@ export default {
 
   data: () => ({
     cellHeight: 0,
-    cellWidth: 0,
     timeline: null,
     progress: 0,
     curr: -1,
@@ -135,7 +113,7 @@ export default {
     panel.remove();
     document.body.append(panel);
 
-    this.bindAnimation();
+    // this.bindAnimation();
   },
 
   destroyed() {
@@ -146,13 +124,8 @@ export default {
   methods: {
     onResize() {
       // resize the size of image wrappers
-      const { clientHeight, clientWidth } = this.$refs.wrapper;
-      this.cellHeight = this.$vuetify.breakpoint.mobile
-        ? Math.ceil((clientWidth / 2) * 0.4)
-        : Math.ceil(clientHeight / 4);
-      this.cellWidth = this.$vuetify.breakpoint.mobile
-        ? Math.ceil((clientWidth - 24) / 2)
-        : Math.ceil(this.cellHeight * 0.45);
+      const { clientWidth } = this.$refs.body;
+      this.cellHeight = Math.ceil(((clientWidth - 32) * 0.5625) / 2);
 
       setTimeout(() => {
         // resize the size of image themselves
@@ -170,36 +143,36 @@ export default {
       }, 0);
     },
 
-    bindAnimation() {
-      if (this.timeline) this.timeline.kill();
-      const { wrapper, body } = this.$refs;
-      const { mobile } = this.$vuetify.breakpoint;
-      setTimeout(() => {
-        const gap = body.clientWidth - wrapper.clientWidth;
-        this.timeline = ScrollTrigger.create({
-          animation: gsap.fromTo(
-            body,
-            { x: 0 },
-            {
-              x: mobile ? 0 : -gap,
-            }
-          ),
-          trigger: wrapper,
-          end: "+=" + (gap + 200),
-          pin: !mobile,
-          // pin: !mobile && gap !== 0,
-          onUpdate: (e) => {
-            this.progress = e.progress;
-          },
-        });
-      }, 0);
-    },
+    // bindAnimation() {
+    //   if (this.timeline) this.timeline.kill();
+    //   const { wrapper, body } = this.$refs;
+    //   const { mobile } = this.$vuetify.breakpoint;
+    //   setTimeout(() => {
+    //     const gap = body.clientWidth - wrapper.clientWidth;
+    //     this.timeline = ScrollTrigger.create({
+    //       animation: gsap.fromTo(
+    //         body,
+    //         { x: 0 },
+    //         {
+    //           x: mobile ? 0 : -gap,
+    //         }
+    //       ),
+    //       trigger: wrapper,
+    //       end: "+=" + (gap + 200),
+    //       pin: !mobile,
+    //       // pin: !mobile && gap !== 0,
+    //       onUpdate: (e) => {
+    //         this.progress = e.progress;
+    //       },
+    //     });
+    //   }, 0);
+    // },
 
     showMore() {
       this.showAll = !this.showAll;
       this.onResize();
       setTimeout(() => {
-        this.bindAnimation();
+        // this.bindAnimation();
         window.dispatchEvent(new Event("resize"));
       }, 0);
     },
@@ -366,46 +339,35 @@ export default {
   background-position: center;
   position: relative;
 
-  .gallery-body.grid.gallery-row {
-    height: 100vh;
-    max-height: 100%;
-    width: fit-content;
-    min-width: 100%;
-    align-content: center;
-    display: grid;
-    grid-template-rows: var(--cell-height) var(--cell-height);
-    grid-auto-columns: var(--cell-width);
-    grid-auto-flow: column;
-    gap: 0.5rem;
-    padding: 0.5rem;
-
-    .item {
-      @for $i from 1 through 4 {
-        // generate column span for desktop devices
-        &.span#{$i} {
-          grid-column-end: span #{$i};
-        }
-      }
-    }
-  }
-
   .gallery-body.grid.gallery-column {
     justify-content: center;
     align-content: center;
     width: 100%;
+    max-width: 850px;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: var(--cell-width) var(--cell-width);
+    grid-template-columns: 1fr 1fr;
     grid-auto-rows: var(--cell-height);
-    gap: 0.5rem;
-    padding: 0.5rem;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0 auto;
+
+    @media #{map-get($display-breakpoints, 'sm-and-down')} {
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
 
     .item {
-      // generate row span for mobile devices
-      @for $i from 1 through 4 {
-        &.span#{$i} {
-          grid-row-end: span #{5 - $i};
-        }
+      &.span4 {
+        grid-column-end: span 2;
+        grid-row-end: span 2;
+      }
+      &.span2,
+      &.span3 {
+        grid-row-end: span 2;
+      }
+      &.span1 {
+        grid-row-end: span 3;
       }
     }
   }
@@ -444,7 +406,6 @@ export default {
     .show-more {
       align-self: center;
       grid-column-end: span 2;
-      grid-row-end: span 2;
       font-size: 0.7rem;
       right: 0;
       text-align: center;
