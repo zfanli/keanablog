@@ -63,7 +63,7 @@
           <div class="mask">illustration</div>
         </div>
         <gallery
-          progressColor="pink"
+          class="gallery"
           :defaultDisplayCount="13"
           :images="illus"
           :style="{ 'background-image': `url(${scene.wallpaper.illustration}` }"
@@ -77,7 +77,7 @@
           <div class="mask">mineral color</div>
         </div>
         <gallery
-          progressColor="green"
+          class="gallery"
           :defaultDisplayCount="11"
           :images="mine"
           :style="{ 'background-image': `url(${scene.wallpaper.mineral}` }"
@@ -91,7 +91,7 @@
           <div class="mask">ink-wash painting</div>
         </div>
         <gallery
-          progressColor="yellow"
+          class="gallery"
           :images="wash"
           :style="{ 'background-image': `url(${scene.wallpaper.inkWash}` }"
         ></gallery>
@@ -104,7 +104,7 @@
           <div class="mask">photography</div>
         </div>
         <gallery
-          progressColor="blue"
+          class="gallery"
           :images="photo"
           :style="{ 'background-image': `url(${scene.wallpaper.photography}` }"
         ></gallery>
@@ -485,6 +485,19 @@ export default {
     background-position: center;
     // overflow-x: hidden;
     // z-index: 1;
+
+    &#illustration .gallery {
+      background-color: #e6aa8a;
+    }
+    &#mineral .gallery {
+      background-color: #8ae69c;
+    }
+    &#ink-wash .gallery {
+      background-color: #e6c88a;
+    }
+    &#photography .gallery {
+      background-color: #7ac4cc;
+    }
 
     &.nav {
       display: flex;

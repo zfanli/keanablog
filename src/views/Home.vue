@@ -138,11 +138,21 @@ const bucketURL = "https://keanablog.oss-cn-shanghai.aliyuncs.com/",
       "photography.youxiang.3.4.jpg",
     ],
     other: {
+      // wallpaper: {
+      //   mineral: "wallpaper.mineral.jpg",
+      //   illustration: "wallpaper.illustration.jpg",
+      //   inkWash: "wallpaper.ink-wash.jpg",
+      //   photography: "wallpaper.photo.jpg",
+      // },
       wallpaper: {
-        mineral: "wallpaper.mineral.jpg",
-        illustration: "wallpaper.illustration.jpg",
-        inkWash: "wallpaper.ink-wash.jpg",
-        photography: "wallpaper.photo.jpg",
+        mineral:
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+        illustration:
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+        inkWash:
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+        photography:
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
       },
       scene: {
         mineral: "scene.mineral.jpg",
@@ -159,7 +169,7 @@ function makeURL(obj) {
   if (obj instanceof Array) {
     obj = obj.map((a) => bucketURL + a);
   } else if (typeof obj === "string") {
-    obj = bucketURL + obj;
+    if (!obj.startsWith("data:")) obj = bucketURL + obj;
   } else {
     Object.keys(obj).forEach((key) => {
       obj[key] = makeURL(obj[key]);
@@ -178,8 +188,10 @@ Object.values(payload).forEach(function retrieve(a) {
     total += a.length;
     a.forEach((b) => needLoad.push(b));
   } else if (typeof a === "string") {
-    total++;
-    needLoad.push(a);
+    if (!a.startsWith("data:")) {
+      total++;
+      needLoad.push(a);
+    }
   } else {
     Object.values(a).forEach(retrieve);
   }
@@ -193,7 +205,7 @@ export default {
     // ITS HERE! LOOK AT ME!!!
     // OKAY I KNOW YOU CANT SEE ME IF I'M SHORT!!!
     // THERE ARE FOUR LINES HERE, DOES IT ENOUGH TO LET YOU SEE ME???
-    version: "v1.15",
+    version: "v1.16",
     completed: 0,
     total,
     cache: [],
@@ -238,6 +250,7 @@ export default {
 
   mounted() {
     needLoad.forEach((b) => {
+      if (b.startsWith("data:")) return;
       const image = new Image();
       image.src = b;
       image.addEventListener("load", () => this.completed++);
