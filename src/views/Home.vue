@@ -31,6 +31,7 @@ const bucketURL = "https://keanablog.oss-cn-shanghai.aliyuncs.com/",
       "jj.png",
     ],
     illustration: [
+      "illustration.baishe2.16.9.jpg",
       "illustration.panda.9.16.jpg",
       "illustration.peach.9.16.jpg",
       "illustration.girls.16.9.jpg",
