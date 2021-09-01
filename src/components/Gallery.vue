@@ -22,7 +22,7 @@
       </div>
 
       <div class="show-more" @click="showMore" v-if="shouldShowMore">
-        {{ showAll ? "Show Less" : "Show More" }}
+        {{ showAll ? showLessText : showAllText }}
       </div>
     </div>
 
@@ -88,6 +88,8 @@ export default {
     alert: false,
     timeout: 2000,
     showAll: false,
+    showAllText: "More",
+    showLessText: "Less",
   }),
 
   computed: {
@@ -406,21 +408,20 @@ export default {
     .show-more {
       align-self: center;
       grid-column-end: span 2;
-      font-size: 0.7rem;
+      font-size: 1.5rem;
       right: 0;
       text-align: center;
       justify-self: center;
       text-transform: uppercase;
-      font-family: "Rock Salt", cursive;
       cursor: pointer;
-      text-shadow: 0px 5px 5px rgb(0 0 0 / 20%), 0px 4px 5px rgb(0 0 0 / 14%),
-        0px 1px 7px rgb(0 0 0 / 12%);
-      transition: text-shadow 0.25s ease;
+      transition: text-shadow 0.25s ease, box-shadow 0.25s ease;
       width: 100px;
       padding: 0.5rem;
       color: white;
       font-weight: bold;
       position: relative;
+      border: 1px solid white;
+      box-shadow: 0 0 0 0 #0005;
 
       &::after {
         content: "";
@@ -436,8 +437,7 @@ export default {
       }
 
       &:hover {
-        text-shadow: 0px 5px 5px rgb(0 0 0 / 20%), 0px 8px 10px rgb(0 0 0 / 14%),
-          0px 3px 14px rgb(0 0 0 / 12%);
+        box-shadow: 0 0 10px 0 #0005;
       }
     }
   }

@@ -39,7 +39,7 @@ export default {
       // ITS HERE! LOOK AT ME!!!
       // OKAY I KNOW YOU CANT SEE ME IF I'M SHORT!!!
       // THERE ARE FOUR LINES HERE, DOES IT ENOUGH TO LET YOU SEE ME???
-      version: "v1.17",
+      version: "v1.18",
       completed: 0,
       total: 0,
       cache: [],
